@@ -1,39 +1,8 @@
-┌───────────────────────────────────────────────┐
-│                PRESENTACIÓN                   │
-│                                               │
-│  Aplicación Web                               │
-│  Interfaz Cliente                             │
-│  Interfaz Vendedor                            │
-│  Interfaz Administrador                       │
-│  API REST                                     │
-└───────────────────────┬───────────────────────┘
-                        ↓
-┌───────────────────────────────────────────────┐
-│              LÓGICA DE NEGOCIO                │
-│                                               │
-│  Usuarios                                     │
-│  Vendedores                                   │
-│  Productos                                    │
-│  Categorías                                   │
-│  Carrito                                      │
-│  Pedidos                                      │
-│  Inventario / Stock                           │
-│  Pagos                                        │
-│  Envíos                                       │
-└───────────────────────┬───────────────────────┘
-                        ↓
-┌───────────────────────────────────────────────┐
-│                    DATOS                      │
-│                                               │
-│              Base de datos                    │
-└───────────────────────────────────────────────┘
-
-
 # Arquitectura Inicial del Sistema
 
 ## Marketplace E-commerce
 
-La arquitectura del Marketplace E-commerce se organiza inicialmente mediante una arquitectura de tres capas: presentación, lógica de negocio y datos.
+La arquitectura inicial del Marketplace E-commerce se organiza en tres capas principales: **Presentación**, **Lógica de Negocio** y **Datos**. Esta separación permite distribuir las responsabilidades del sistema y facilitar su mantenimiento y evolución.
 
 ## 1. Capa de Presentación
 
@@ -45,13 +14,13 @@ Está conformada por:
 - Interfaz para clientes.
 - Interfaz para vendedores.
 - Interfaz para administradores.
-- API REST para la comunicación con la lógica de negocio.
+- API REST.
 
-Los clientes podrán buscar productos, gestionar su carrito, realizar pedidos y consultar sus compras.
+Los clientes podrán buscar y consultar productos, gestionar su carrito de compra, realizar pedidos, efectuar pagos y consultar el estado de sus compras.
 
-Los vendedores podrán registrar productos, actualizar información, gestionar stock y consultar sus ventas.
+Los vendedores podrán registrar y actualizar productos, gestionar el stock y consultar los pedidos y ventas relacionados con sus productos.
 
-Los administradores podrán gestionar usuarios, vendedores, productos, categorías y pedidos.
+Los administradores podrán gestionar usuarios, vendedores, productos, categorías y pedidos del Marketplace.
 
 ## 2. Capa de Lógica de Negocio
 
@@ -63,17 +32,19 @@ Los principales módulos son:
 - Vendedores.
 - Productos.
 - Categorías.
-- Carrito de compra.
+- Carrito.
 - Pedidos.
 - Inventario y stock.
 - Pagos.
 - Envíos.
 
-Esta capa procesa las solicitudes provenientes de la capa de presentación y aplica las reglas correspondientes antes de acceder a los datos.
+Esta capa recibe las solicitudes provenientes de la capa de presentación, aplica las reglas de negocio correspondientes y realiza las operaciones necesarias sobre los datos.
+
+También se encarga de coordinar las integraciones con los servicios externos requeridos por el sistema.
 
 ## 3. Capa de Datos
 
-La capa de datos es responsable del almacenamiento y consulta de la información utilizada por el sistema.
+La capa de datos es responsable del almacenamiento y consulta de la información utilizada por el Marketplace.
 
 La base de datos almacenará información relacionada con:
 
@@ -89,14 +60,17 @@ La base de datos almacenará información relacionada con:
 
 ## Sistemas Externos
 
-El Marketplace podrá comunicarse con sistemas externos necesarios para completar algunas operaciones:
+El Marketplace se integrará con servicios externos necesarios para completar determinadas operaciones:
 
 - Pasarela de pago.
 - Servicio de envío.
 - Servicio de facturación.
 
-Estos servicios serán consumidos desde la lógica de negocio mediante interfaces de integración.
+La pasarela de pago permitirá procesar las transacciones realizadas por los clientes.
 
+El servicio de envío permitirá gestionar la información relacionada con la entrega de los pedidos.
+
+El servicio de facturación permitirá generar los comprobantes correspondientes a las compras realizadas.
 
 ## Diagrama de Arquitectura en Capas
 
@@ -131,9 +105,38 @@ flowchart TD
     end
 
     Web --> API
-    API --> NEGOCIO
-    NEGOCIO --> BD
+    API --> Usuarios
+    API --> Vendedores
+    API --> Productos
+    API --> Categorias
+    API --> Carrito
+    API --> Pedidos
 
+    Usuarios --> BD
+    Vendedores --> BD
+    Productos --> BD
+    Categorias --> BD
+    Carrito --> BD
+    Pedidos --> BD
+    Inventario --> BD
+    Pagos --> BD
+    Envios --> BD
+
+    Pedidos --> Pagos
+    Pedidos --> Envios
     Pagos --> Pasarela
     Envios --> ServicioEnvio
     Pedidos --> Facturacion
+```
+
+## Descripción de la Arquitectura
+
+La arquitectura propuesta sigue una organización de tres capas.
+
+La **capa de Presentación** permite la interacción de los usuarios con el Marketplace mediante una aplicación web y una API REST.
+
+La **capa de Lógica de Negocio** contiene los módulos responsables de gestionar usuarios, vendedores, productos, categorías, carrito de compra, pedidos, inventario, pagos y envíos.
+
+La **capa de Datos** permite almacenar y consultar la información necesaria para el funcionamiento del sistema mediante una base de datos.
+
+Además, algunos módulos de la lógica de negocio se comunican con sistemas externos. El módulo de pagos se integra con una pasarela de pago, el módulo de envíos se comunica con un servicio de envío y el módulo de pedidos utiliza un servicio de facturación para la generación de comprobantes.
