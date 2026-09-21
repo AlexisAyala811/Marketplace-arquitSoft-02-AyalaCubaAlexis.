@@ -1,17 +1,15 @@
-# 05. Restricciones
+# Restricciones
 
-## Objetivo
+## Marketplace E-commerce
 
-Describir las condiciones y limitaciones que deben considerarse durante el diseño de la arquitectura.
-
-## Restricciones principales
-
-1. El proyecto debe desarrollarse dentro de un contexto académico y con alcance definido.
-2. Se requiere una solución modular que permita evolución incremental.
-3. Debe considerarse la facilidad de integración con servicios de pago y notificaciones.
-4. El diseño debe priorizar claridad y comprensión del sistema para documentación y presentación.
-5. La arquitectura debe ser viable con recursos y tiempos de desarrollo previstos en el curso.
-
-## Implicaciones
-
-Estas restricciones orientan la solución hacia un diseño simple, comprensible y extensible, evitando sobrediseños innecesarios.
+| ID | Restricción | Descripción |
+|---|---|---|
+| RC01 | Aplicación web | El sistema debe desarrollarse como una aplicación web accesible mediante un navegador. |
+| RC02 | Control de versiones | El código fuente debe gestionarse utilizando Git y mantenerse en un repositorio GitHub. |
+| RC03 | API REST | La comunicación entre el frontend y el backend debe realizarse mediante una API REST. |
+| RC04 | Base de datos relacional | La información del sistema debe almacenarse en una base de datos relacional. |
+| RC05 | Pasarela de pago | El sistema debe integrarse con una pasarela de pago externa para procesar las transacciones de los clientes. |
+| RC06 | Servicio de envío | El sistema debe integrarse con un servicio externo para gestionar la información relacionada con la entrega de pedidos. |
+| RC07 | Servicio de facturación | El sistema debe integrarse con un servicio de facturación para generar comprobantes de pago. |
+| RC08 | Acceso por roles | El sistema debe controlar el acceso a las funcionalidades de acuerdo con el rol del usuario: cliente, vendedor o administrador. |
+| RC09 | Conexión a Internet | La plataforma requiere conexión a Internet para realizar operaciones y sincronizar información con los servicios externos. |
