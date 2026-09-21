@@ -1,27 +1,12 @@
-# 01. Actores
+# Actores del Sistema
 
-## Descripción general
+## Sistema de Gestión de Mayoristas
 
-Este documento identifica a los actores principales que intervienen en el sistema de marketplace y sus responsabilidades dentro del dominio.
-
-## Actores
-
-### Comprador
-- Busca productos o servicios.
-- Realiza búsquedas, compara opciones y efectúa compras.
-
-### Vendedor
-- Publica productos o servicios.
-- Administra inventario, precios y pedidos.
-
-### Administrador
-- Supervisa el funcionamiento del marketplace.
-- Gestiona usuarios, contenido y configuraciones del sistema.
-
-### Sistema / Plataforma
-- Automatiza procesos como pagos, notificaciones y validaciones.
-- Facilita la operación del ecosistema digital.
-
-## Relaciones
-
-Los actores interactúan de forma complementaria: el comprador adquiere, el vendedor ofrece, y el administrador asegura la estabilidad y cumplimiento de reglas del negocio.
+| Actor | ¿Qué necesita realizar? |
+|---|---|
+| Mayorista | Registrar y consultar compras, ventas, pagos, deudas y movimientos comerciales. |
+| Trabajador | Registrar operaciones comerciales según los permisos asignados. |
+| Cliente | Realizar compras, efectuar pagos y consultar deudas o saldos pendientes. |
+| Proveedor | Registrar o proporcionar información relacionada con productos, compras y pagos. |
+| Administrador | Gestionar usuarios, permisos y la configuración general del sistema. |
+| Servicio de facturación | Generar comprobantes relacionados con las operaciones comerciales. |
