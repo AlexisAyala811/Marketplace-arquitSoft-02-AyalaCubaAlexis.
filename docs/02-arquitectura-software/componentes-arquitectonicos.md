@@ -1,5 +1,1 @@
-# Componentes arquitectónicos
-
-![Componentes arquitectónicos del Marketplace](../../img/componentes.png)
-
-
+![Clean Architecture de GoPet](../../img/componentes.png)

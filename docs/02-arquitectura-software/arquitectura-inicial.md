@@ -1,142 +1,117 @@
-# Arquitectura Inicial del Sistema
+# Arquitectura inicial del sistema
 
-## Marketplace E-commerce
-
-La arquitectura inicial del Marketplace E-commerce se organiza en tres capas principales: **Presentación**, **Lógica de Negocio** y **Datos**. Esta separación permite distribuir las responsabilidades del sistema y facilitar su mantenimiento y evolución.
-
-## 1. Capa de Presentación
-
-La capa de presentación permite la interacción de los diferentes usuarios con el sistema.
-
-Está conformada por:
-
-- Aplicación web.
-- Interfaz para clientes.
-- Interfaz para vendedores.
-- Interfaz para administradores.
-- API REST.
-
-Los clientes podrán buscar y consultar productos, gestionar su carrito de compra, realizar pedidos, efectuar pagos y consultar el estado de sus compras.
-
-Los vendedores podrán registrar y actualizar productos, gestionar el stock y consultar los pedidos y ventas relacionados con sus productos.
-
-Los administradores podrán gestionar usuarios, vendedores, productos, categorías y pedidos del Marketplace.
-
-## 2. Capa de Lógica de Negocio
-
-La capa de lógica de negocio contiene las reglas y funcionalidades principales del Marketplace.
-
-Los principales módulos son:
-
-- Usuarios.
-- Vendedores.
-- Productos.
-- Categorías.
-- Carrito.
-- Pedidos.
-- Inventario y stock.
-- Pagos.
-- Envíos.
-
-Esta capa recibe las solicitudes provenientes de la capa de presentación, aplica las reglas de negocio correspondientes y realiza las operaciones necesarias sobre los datos.
-
-También se encarga de coordinar las integraciones con los servicios externos requeridos por el sistema.
-
-## 3. Capa de Datos
-
-La capa de datos es responsable del almacenamiento y consulta de la información utilizada por el Marketplace.
-
-La base de datos almacenará información relacionada con:
-
-- Usuarios.
-- Vendedores.
-- Productos.
-- Categorías.
-- Carritos.
-- Pedidos.
-- Inventario.
-- Pagos.
-- Direcciones de entrega.
-
-## Sistemas Externos
-
-El Marketplace se integrará con servicios externos necesarios para completar determinadas operaciones:
-
-- Pasarela de pago.
-- Servicio de envío.
-- Servicio de facturación.
-
-La pasarela de pago permitirá procesar las transacciones realizadas por los clientes.
-
-El servicio de envío permitirá gestionar la información relacionada con la entrega de los pedidos.
-
-El servicio de facturación permitirá generar los comprobantes correspondientes a las compras realizadas.
-
-## Diagrama de Arquitectura en Capas
+## Diagrama de arquitectura
 
 ```mermaid
 flowchart TD
 
-    subgraph PRESENTACION["PRESENTACIÓN"]
-        Web["Aplicación Web"]
-        API["API REST"]
-    end
+%% =========================
+%% ACTORES
+%% =========================
+subgraph ACTORES["ACTORES"]
+    Cliente["Cliente"]
+    Seller["Seller"]
+    Admin["Administrador"]
+end
 
-    subgraph NEGOCIO["LÓGICA DE NEGOCIO"]
-        Usuarios["Usuarios"]
-        Vendedores["Vendedores"]
-        Productos["Productos"]
-        Categorias["Categorías"]
-        Carrito["Carrito"]
-        Pedidos["Pedidos"]
-        Inventario["Inventario / Stock"]
-        Pagos["Pagos"]
-        Envios["Envíos"]
-    end
+%% =========================
+%% PRESENTACIÓN
+%% =========================
+subgraph PRESENTACION["PRESENTACIÓN"]
+    Web["Aplicación Web"]
+    API["API REST"]
+end
 
-    subgraph DATOS["DATOS"]
-        BD["Base de Datos"]
-    end
+%% =========================
+%% LÓGICA DE NEGOCIO
+%% =========================
+subgraph NEGOCIO["LÓGICA DE NEGOCIO"]
+    Usuarios["Usuarios"]
+    Sellers["Sellers"]
+    Catalogo["Catálogo"]
+    Carrito["Carrito"]
+    Pedidos["Pedidos"]
+end
 
-    subgraph EXTERNOS["SISTEMAS EXTERNOS"]
-        Pasarela["Pasarela de Pago"]
-        ServicioEnvio["Servicio de Envío"]
-        Facturacion["Servicio de Facturación"]
-    end
+%% =========================
+%% DATOS
+%% =========================
+subgraph DATOS["DATOS"]
+    BD["Base de datos"]
+end
 
-    Web --> API
-    API --> Usuarios
-    API --> Vendedores
-    API --> Productos
-    API --> Categorias
-    API --> Carrito
-    API --> Pedidos
+%% =========================
+%% SISTEMAS EXTERNOS
+%% =========================
+subgraph EXTERNOS["SISTEMAS EXTERNOS"]
+    Pago["Pasarela de pago"]
+    ERP["ERP"]
+    Envio["Servicio de envío"]
+end
 
-    Usuarios --> BD
-    Vendedores --> BD
-    Productos --> BD
-    Categorias --> BD
-    Carrito --> BD
-    Pedidos --> BD
-    Inventario --> BD
-    Pagos --> BD
-    Envios --> BD
+%% =========================
+%% FLUJO PRINCIPAL
+%% =========================
+ACTORES --> Web
+Web --> API
+API --> NEGOCIO
+NEGOCIO --> BD
 
-    Pedidos --> Pagos
-    Pedidos --> Envios
-    Pagos --> Pasarela
-    Envios --> ServicioEnvio
-    Pedidos --> Facturacion
+%% =========================
+%% INTEGRACIONES EXTERNAS
+%% =========================
+NEGOCIO --> Pago
+NEGOCIO --> ERP
+NEGOCIO --> Envio
+
+%% =========================
+%% DISTRIBUCIÓN HORIZONTAL
+%% =========================
+Cliente ~~~ Seller
+Seller ~~~ Admin
+
+Usuarios ~~~ Sellers
+Sellers ~~~ Catalogo
+Catalogo ~~~ Carrito
+Carrito ~~~ Pedidos
+
+Pago ~~~ ERP
+ERP ~~~ Envio
+
+%% =========================
+%% ESTILOS
+%% =========================
+style ACTORES fill:#222,stroke:#fff,stroke-width:2px,color:#fff
+style PRESENTACION fill:#222,stroke:#fff,stroke-width:2px,color:#fff
+style NEGOCIO fill:#222,stroke:#fff,stroke-width:2px,color:#fff
+style DATOS fill:#222,stroke:#fff,stroke-width:2px,color:#fff
+style EXTERNOS fill:#222,stroke:#fff,stroke-width:2px,color:#fff
+
+style Cliente fill:#222,stroke:#fff,color:#fff
+style Seller fill:#222,stroke:#fff,color:#fff
+style Admin fill:#222,stroke:#fff,color:#fff
+
+style Web fill:#222,stroke:#fff,color:#fff
+style API fill:#222,stroke:#fff,color:#fff
+
+style Usuarios fill:#222,stroke:#fff,color:#fff
+style Sellers fill:#222,stroke:#fff,color:#fff
+style Catalogo fill:#222,stroke:#fff,color:#fff
+style Carrito fill:#222,stroke:#fff,color:#fff
+style Pedidos fill:#222,stroke:#fff,color:#fff
+
+style BD fill:#222,stroke:#fff,color:#fff
+
+style Pago fill:#222,stroke:#fff,color:#fff
+style ERP fill:#222,stroke:#fff,color:#fff
+style Envio fill:#222,stroke:#fff,color:#fff
 ```
+## Descripción
 
-## Descripción de la Arquitectura
+La arquitectura inicial se organiza en tres capas principales:
 
-La arquitectura propuesta sigue una organización de tres capas.
+- **Presentación:** permite la interacción de los usuarios con el sistema mediante la aplicación web y la API REST.
+- **Lógica de negocio:** contiene los principales módulos responsables de las funcionalidades del sistema: usuarios, sellers, catálogo, carrito y pedidos.
+- **Datos:** permite almacenar y consultar la información mediante una base de datos.
 
-La **capa de Presentación** permite la interacción de los usuarios con el Marketplace mediante una aplicación web y una API REST.
-
-La **capa de Lógica de Negocio** contiene los módulos responsables de gestionar usuarios, vendedores, productos, categorías, carrito de compra, pedidos, inventario, pagos y envíos.
-
-La **capa de Datos** permite almacenar y consultar la información necesaria para el funcionamiento del sistema mediante una base de datos.
-
-Además, algunos módulos de la lógica de negocio se comunican con sistemas externos. El módulo de pagos se integra con una pasarela de pago, el módulo de envíos se comunica con un servicio de envío y el módulo de pedidos utiliza un servicio de facturación para la generación de comprobantes.
+Además, el módulo de **Pedidos** se integra con sistemas externos como la **pasarela de pago** y el **servicio de envío**.

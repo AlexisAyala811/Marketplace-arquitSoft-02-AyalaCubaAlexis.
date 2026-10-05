@@ -148,3 +148,15 @@ Las entidades deciden **qué es válido**.
 Los contratos ocultan **con qué tecnología** se hace cada cosa.
 
 ---
+
+## Material visual de arquitectura
+
+- `docs/ARQUITECTURA-CLEAN-MARKETPLACE.md`: explicación paso a paso.
+- `docs/DIAGRAMA-CLEAN-ARCHITECTURE.mmd`: diagrama editable en Mermaid.
+- `docs/diagrama-clean-architecture-marketplace.png`: gráfico visual para clase.
+
+### La pregunta clave para los estudiantes
+
+> «Si cambio el proveedor de pago, ¿tengo que modificar el dominio o `RegistrarCompraCasoUso`?»
+
+La respuesta esperada es **no**. Se cambia el adaptador y la configuración de composición.
