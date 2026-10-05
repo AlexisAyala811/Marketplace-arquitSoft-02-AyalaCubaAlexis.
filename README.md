@@ -1,6 +1,6 @@
 # Marketplace de productos para mascotas
  ## nombre
- lizbeth Jaico
+ Ayala Cuba Alexis 
 ## Descripción
  Marketplace académico de productos para mascotas. 
  ## Caso de estudio
